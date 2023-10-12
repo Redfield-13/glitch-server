@@ -20,8 +20,8 @@ async function get_cookie() {
     // Else do login
     const formData = new FormData();
     const login_url = 'https://www.tracegenie.com/amember4/amember/login';
-    formData.append('amember_login', 'art2sl');
-    formData.append('amember_pass', 'nHZpKtaQh7@@ZvW');
+    formData.append('amember_login', 'artufe2');
+    formData.append('amember_pass', '9w63S8aKhvBWLkB');
     formData.append('remember_login', 1);
     formData.append('login_attempt_id', Math.floor(+new Date() / 1000)); // Epoch timestamp
     formData.append('_referer', 'https://www.tracegenie.com/');
@@ -45,6 +45,7 @@ async function get_cookie() {
         
     }
     global.cookie = cookie_str;
+    console.log(cookie_str);
     return cookie_str;
 }
 
@@ -58,7 +59,7 @@ async function genie_call(method, params) {
         url_path = '/amember4/amember/prov/allnt.php';
     }
     else if (method==='postcode') {
-        url_path = '/amember4/amember/prov/allpc.php';
+        url_path = '/amember4/amember/1DAY/allpcs.php';
     }
     else if (method==='postcode_address') {
         url_path = '/amember4/amember/prov/address22promember.php';
@@ -76,10 +77,10 @@ async function genie_call(method, params) {
     let query_str = querystring.stringify(params);
     // Construct the final URL from all the components
     const url = `${base}${url_path}?${query_str}`;
+    console.log('liiiiiiiiink: '+ url);
     const urlResponse = await axios.get(url, {headers: {Cookie: await get_cookie()  }});
     urlResponse.data = urlResponse.data.replace(/&nbsp;/g, ' '); // &nbsp; to single space to fix whitespace
     urlResponse.data = urlResponse.data.replace(/\s{2,}/g, ' '); // Replace more than 1 space with 1 space
-
     return urlResponse
 }
 
